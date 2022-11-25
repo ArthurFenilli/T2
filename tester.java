@@ -1,4 +1,4 @@
-//eai blz?
+
 /**
  * Escreva uma descrição da classe tester aqui.
  * 
@@ -12,7 +12,7 @@ public class tester
       Scanner teclado = new Scanner(System.in);
       Scanner in = new Scanner(System.in);
       ListaT teste = new ListaT(5);
-      
+      ListaP teste1 = new ListaP(5);
       int opcao;
         do{
             System.out.println("\n\n---- MENU ----");
@@ -47,6 +47,15 @@ public class tester
                         break;
                 case 4: System.out.println("Não implementado.");
                         break;
+                
+                case 5: System.out.println(teste1.somaGols(teste.consultarTime(1),teste1));
+                
+                case 6: int cod1 = teclado.nextInt();
+                        int cod2 = teclado.nextInt();
+                        int pont1 = teclado.nextInt();
+                        int pont2 = teclado.nextInt();
+                        String data = in.nextLine();
+                        teste1.incluiPartida(cod1, cod2,data,pont1, pont2);                
                 default: System.out.println("Opcao invalida");
             }
             
