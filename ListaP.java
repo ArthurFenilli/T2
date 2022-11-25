@@ -150,4 +150,49 @@ public int contaPontos(Time time){
     return contP;
     
 }
+public int contaJogos(Time time){
+    
+    int contJ = 0;
+    
+    for(int i = 0;i<index;i++){
+        if(lista_partidas[i].getCodigo1() == time.getCodigo() || lista_partidas[i].getCodigo2() == time.getCodigo()){ contJ++ }
+    }
+    return contJ;
+}
+public int golsPro(Time time){
+    contGP = 0;
+    for(int i = 0; i < index; i++){
+        if(lista_partidas[i].getCodigo1() == time.getCodigo() || lista_partidas[i].getCodigo2() == time.getCodigo()){
+            if(descobrePosição(time,lista_partidas[i] ) == 1){
+                contGP += lista_partidas[i].getPontuação1();
+            }       
+            else{
+                contGP += lista_partidas[i].getPontuação2();            
+            }
+        }
+    }
+    return GP;
+}
+public int golsContra(Time time){
+    contGC = 0;
+    for(int i = 0; i < index; i++){
+        if(lista_partidas[i].getCodigo1() == time.getCodigo() || lista_partidas[i].getCodigo2() == time.getCodigo()){
+            if(descobrePosição(time,lista_partidas[i] ) == 1){
+                contGC += lista_partidas[i].getPontuação2();
+            }       
+            else{
+                contGC += lista_partidas[i].getPontuação1();            
+            }
+        }
+    }
+    return GC;
+}
+public int saldoGols(Time time){
+    int GP = golsPro(time), int GC = golsContra(time), saldo = (GP-GC);
+    return saldo;
+}
+public int aproveitamento(Time time){
+    int v = contaVitorias(time), int j = contaJogos(time), aproveitamento = ((v/j)*100);
+    return aproveitamento;
+}
 }
