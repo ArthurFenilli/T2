@@ -26,6 +26,34 @@ public boolean incluiPartida(int cod1, int cod2,String data, int pont1, int pont
     return true;
 }
 
+public int descobrePosição(Time time, Partida partida){
+    for(int i = 0; i<index; i++){
+       if(lista_partidas[i].getCodigo3() == partida.getCodigo3()){
+           if(lista_partidas[i].getCodigo1() == time.getCodigo()) return 1;
+           if(lista_partidas[i].getCodigo2() == time.getCodigo()) return 2;
+           
+       }
+       
+    }
+    return 0;
+}
+
+public int descobreGol(Time time, Partida partida){
+    if(descobrePosição(time,partida) == 1) return partida.getPontuação1();
+    else if(descobrePosição(time,partida) == 2) return partida.getPontuação2();
+    else return 0;
+    
+}
+
+public int somaGols(Time time, ListaP lista){
+    int soma = 0;
+    for(int i = 0; i<index; i++){
+        if(lista.descobrePosição(time,lista_partidas[i]) == 1 || lista.descobrePosição(time,lista_partidas[i]) == 2){
+          soma = soma + descobreGol(time, lista_partidas[i]); 
+        }
+    }
+    return soma;
+}
 
 public Partida consultaPartida(int num){
   for(int i = 0; i<index;i++){
@@ -52,18 +80,4 @@ public boolean excluiPartida(int num){
     lista_partidas[lista_partidas.length - 1] = null;
     index--;
     return true;
-}
-
-
-public boolean mudaData(int num, String novaData){
-   return true; 
-}
-
-
-public boolean mudaPontuação(int num, int pontuação, int opcao){
-    if(consultaPartida(num)== null || num!=1 && num!=2)return false;
-    if(opcao == 1)lista_partidas[num-1].setPontuação1(pontuação);
-    if(opcao == 2)lista_partidas[num-1].setPontuação2(pontuação);
-    return true;    
-}
 }
