@@ -1,4 +1,3 @@
-
 /**
  * Escreva uma descrição da classe ListaP aqui.
  * 
@@ -38,6 +37,7 @@ public int descobrePosição(Time time, Partida partida){
     return 0;
 }
 
+
 public int descobreGol(Time time, Partida partida){
     if(descobrePosição(time,partida) == 1) return partida.getPontuação1();
     else if(descobrePosição(time,partida) == 2) return partida.getPontuação2();
@@ -63,6 +63,7 @@ public Partida consultaPartida(int num){
 }
 
 
+
 public boolean excluiPartida(int num){
     int diminui = Integer.MAX_VALUE;
     
@@ -80,4 +81,73 @@ public boolean excluiPartida(int num){
     lista_partidas[lista_partidas.length - 1] = null;
     index--;
     return true;
+}
+
+
+
+public boolean mudaPontuação(int num, int pontuação, int opcao){
+    if(consultaPartida(num)== null || num!=1 && num!=2)return false;
+    if(opcao == 1)lista_partidas[num-1].setPontuação1(pontuação);
+    if(opcao == 2)lista_partidas[num-1].setPontuação2(pontuação);
+    return true;    
+}
+
+public char descobreResultado(Partida partida, Time time){
+    for(int i=0;i<index;i++){
+        if(lista_partidas[i] == partida){
+            if(descobrePosição(time,lista_partidas[i] ) == 1){
+                if(lista_partidas[i].getPontuação1()>lista_partidas[i].getPontuação2()) { return 'V'; }
+                    else if(lista_partidas[i].getPontuação1()<lista_partidas[i].getPontuação2()) { return 'D'; }
+                        else { return 'E';}
+            }
+            else if(descobrePosição(time, lista_partidas[i]) == 2){
+                if(lista_partidas[i].getPontuação1()>lista_partidas[i].getPontuação2()) { return 'V'; }
+                    else if(lista_partidas[i].getPontuação1()<lista_partidas[i].getPontuação2()) { return 'D'; }
+                        else { return 'E'; }                    
+            }
+        }
+    }
+    return '.';
+}
+
+public int contaVitorias(Time time){
+     int contV = 0;
+    for(int i = 0;i<index;i++){
+        if(lista_partidas[i].getCodigo1() == time.getCodigo() || lista_partidas[i].getCodigo2() == time.getCodigo()){
+            if(descobreResultado(lista_partidas[i], time) == 'V'){ contV++;}
+        }
+    }
+    return contV;
+}
+
+public int contaDerrotas(Time time){
+     int contD = 0;
+    for(int i = 0;i<index;i++){
+        if(lista_partidas[i].getCodigo1() == time.getCodigo() || lista_partidas[i].getCodigo2() == time.getCodigo()){
+            if(descobreResultado(lista_partidas[i], time) == 'D'){ contD++; }
+        }
+    }
+    return contD;
+}
+
+public int contaEmpates(Time time){
+    
+    int contE = 0;
+    
+    for(int i = 0;i<index;i++){
+        if(lista_partidas[i].getCodigo1() == time.getCodigo() || lista_partidas[i].getCodigo2() == time.getCodigo()){
+            if(descobreResultado(lista_partidas[i], time) == 'E'){ contE++; }
+        }
+    }
+    return contE;
+}
+
+public int contaPontos(Time time){
+    int contP = 0, v =contaVitorias(time) * 3 , e =contaEmpates(time) ;
+    
+    contP = v;
+    contP = contP + e;
+    return contP;
+    
+}
 }
